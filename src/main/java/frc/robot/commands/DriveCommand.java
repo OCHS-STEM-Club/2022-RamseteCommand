@@ -27,7 +27,7 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.driveWithXbox(RobotContainer.m_driverController, 0.5);
+    m_drivetrain.driveWithXbox(RobotContainer.m_driverController);
   }
 
   // Called once the command ends or is interrupted.

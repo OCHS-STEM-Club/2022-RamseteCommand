@@ -21,7 +21,8 @@ public final class Constants {
     public static final int kRightMotor1Port = 7;
     public static final int kRightMotor2Port = 8;
 
-    public static final double kSpeed = 0.80;
+    public static final double kSpeed = 0.40;
+    public static final double kDriveVoltsMultiplier = 0.40;//NEVER put more than "1" 
 
 
     public static final int[] kLeftEncoderPorts = new int[] {0, 1};

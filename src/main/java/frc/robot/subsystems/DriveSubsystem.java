@@ -62,7 +62,7 @@ public class DriveSubsystem extends SubsystemBase {
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
-    m_leftMotors.setInverted(true);
+    m_rightMotors.setInverted(true);
 
     // Sets the distance per pulse for the encoders
     m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
@@ -114,12 +114,12 @@ public class DriveSubsystem extends SubsystemBase {
    * @param rot the commanded rotation
    */
 
-  public void driveWithXbox(XboxController xboxController, double speed) {
-    m_drive.tankDrive(xboxController.getLeftY()*DriveConstants.kSpeed, xboxController.getRightY()*DriveConstants.kSpeed);
+  public void driveWithXbox(XboxController xboxController) {
+    m_drive.tankDrive(-xboxController.getLeftY()*DriveConstants.kSpeed, -xboxController.getRightY()*DriveConstants.kSpeed);
 }
 
   public void arcadeDrive(double fwd, double rot) {
-    m_drive.arcadeDrive(fwd, rot);
+    m_drive.arcadeDrive(fwd *DriveConstants.kSpeed, rot);
   }
 
   /**
@@ -129,8 +129,8 @@ public class DriveSubsystem extends SubsystemBase {
    * @param rightVolts the commanded right output
    */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    m_leftMotors.setVoltage(leftVolts);
-    m_rightMotors.setVoltage(rightVolts);
+    m_leftMotors.setVoltage(leftVolts *DriveConstants.kDriveVoltsMultiplier);
+    m_rightMotors.setVoltage(rightVolts *DriveConstants.kDriveVoltsMultiplier);
     m_drive.feed();
   }
 
