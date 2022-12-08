@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -114,7 +115,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
 
   public void driveWithXbox(XboxController xboxController, double speed) {
-    drive.tankDrive(xboxController.getLeftY()*Constants.kSpeed, xboxController.getRightY()*Constants.kSpeed);
+    m_drive.tankDrive(xboxController.getLeftY()*DriveConstants.kSpeed, xboxController.getRightY()*DriveConstants.kSpeed);
 }
 
   public void arcadeDrive(double fwd, double rot) {

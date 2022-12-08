@@ -21,6 +21,9 @@ public final class Constants {
     public static final int kRightMotor1Port = 7;
     public static final int kRightMotor2Port = 8;
 
+    public static final double kSpeed = 0.80;
+
+
     public static final int[] kLeftEncoderPorts = new int[] {0, 1};
     public static final int[] kRightEncoderPorts = new int[] {2, 3};
     public static final boolean kLeftEncoderReversed = false;
@@ -46,7 +49,9 @@ public final class Constants {
     public static final double kaVoltSecondsSquaredPerMeter = 0.2;
 
     // Example value only - as above, this must be tuned for your drive!
-    public static final double kPDriveVel = 8.5;
+    public static final double kPDriveVel = 2.5366;
+    
+
   }
 
   public static final class OIConstants {
