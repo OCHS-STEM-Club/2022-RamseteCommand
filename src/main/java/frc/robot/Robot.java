@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private static final String trajectoryJSONPath = "paths/Main_Line.wpilib.json"; //From Downloads File named output 
+  private static final String trajectoryJSONPath = "paths/TestPath1.wpilib.json"; //From Downloads File named output 
   //put under SRC/Main Deploy
 
   /**
