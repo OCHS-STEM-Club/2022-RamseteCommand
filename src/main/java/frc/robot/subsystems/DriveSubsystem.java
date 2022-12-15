@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.security.AlgorithmParametersSpi;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -21,6 +23,8 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.kauailabs.navx.frc.AHRS;
+
 public class DriveSubsystem extends SubsystemBase {
   // The motors on the left side of the drive.
   private final MotorControllerGroup m_leftMotors =
@@ -37,6 +41,7 @@ public class DriveSubsystem extends SubsystemBase {
   // The robot's drive
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
+
   // The left-side drive encoder
   private final Encoder m_leftEncoder =
       new Encoder(
@@ -52,7 +57,8 @@ public class DriveSubsystem extends SubsystemBase {
           DriveConstants.kRightEncoderReversed);
 
   // The gyro sensor
-  private final Gyro m_gyro = new ADXRS450_Gyro();
+  //private final Gyro m_gyro = new ADXRS450_Gyro();
+  private final AHRS m_navx = new AHRS(); 
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
@@ -69,14 +75,16 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
 
     resetEncoders();
-    m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+    //m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+    m_odometry = new DifferentialDriveOdometry(m_navx.getRotation2d());
   }
 
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(
-        m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+        //m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+        m_navx.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
   }
 
   /**
@@ -104,7 +112,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
-    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    m_odometry.resetPosition(pose, m_navx.getRotation2d());
   }
 
   /**
@@ -118,9 +126,11 @@ public class DriveSubsystem extends SubsystemBase {
     m_drive.tankDrive(-xboxController.getLeftY()*DriveConstants.kSpeed, -xboxController.getRightY()*DriveConstants.kSpeed);
 }
 
-  public void arcadeDrive(double fwd, double rot) {
-    m_drive.arcadeDrive(fwd *DriveConstants.kSpeed, rot);
-  }
+ // public void arcadeDrive(double fwd, double rot) {
+   // m_drive.arcadeDrive(fwd *DriveConstants.kSpeed, rot);
+ // }
+
+  
 
   /**
    * Controls the left and right sides of the drive directly with voltages.
@@ -178,7 +188,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
-    m_gyro.reset();
+    //m_gyro.reset();
+    //m_navx.reset();
+    m_navx.zeroYaw();
   }
 
   /**
@@ -187,7 +199,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return m_gyro.getRotation2d().getDegrees();
+    return m_navx.getRotation2d().getDegrees();
   }
 
   /**
@@ -196,6 +208,6 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return -m_gyro.getRate();
+    return -m_navx.getRate();
   }
 }

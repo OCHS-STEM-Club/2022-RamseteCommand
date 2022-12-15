@@ -11,9 +11,11 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.subsystems.DriveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,6 +27,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private DriveSubsystem m_driveSubsystem;
 
   private static final String trajectoryJSONPath = "paths/TestPath1.wpilib.json"; //From Downloads File named output 
   //put under SRC/Main Deploy
@@ -46,6 +49,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    
 
 
   }
@@ -64,6 +68,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    //SmartDashboard.putNumber("m_odometry", DriveSubsystem.rese)
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -78,6 +83,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
