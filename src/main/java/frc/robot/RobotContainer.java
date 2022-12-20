@@ -21,11 +21,14 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveDistance;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -53,6 +56,11 @@ public class RobotContainer {
 
     public static Trajectory autonomousTrajectory;
 
+    private final Command m_simpleAuto =
+    new DriveDistance(
+        AutoConstants.kAutoDriveDistanceInches, AutoConstants.kAutoDriveSpeed, m_robotDrive);
+
+    SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -70,6 +78,12 @@ public class RobotContainer {
                         // () -> m_robotDrive.arcadeDrive(-m_driverController.getLeftY(), m_driverController.getRightX()),
                         () -> m_robotDrive.driveWithXbox(m_driverController),
                         m_robotDrive));
+
+        m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
+        //m_chooser.addOption("Complex Auto", m_complexAuto);
+                    
+                        // Put the chooser on the dashboard
+        Shuffleboard.getTab("Autonomous").add(m_chooser);
     }
 
     /**
