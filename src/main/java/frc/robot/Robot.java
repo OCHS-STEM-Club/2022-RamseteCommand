@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   private DriveSubsystem m_driveSubsystem;
 
-  private static final String trajectoryJSONPath = "paths/TestPath1.wpilib.json"; //From Downloads File named output 
+  //private static final String trajectoryJSONPath = "paths/TestPath1.wpilib.json"; //From Downloads File named output 
   //put under SRC/Main Deploy
 
   /**
@@ -39,12 +39,14 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
+    /*
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONPath);
       RobotContainer.autonomousTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
    } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryJSONPath, ex.getStackTrace());
    }
+   */
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.

@@ -29,6 +29,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveDistance;
+import frc.robot.commands.Pathweaver;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -56,9 +57,14 @@ public class RobotContainer {
 
     public static Trajectory autonomousTrajectory;
 
-    private final Command m_simpleAuto =
-    new DriveDistance(
-        AutoConstants.kAutoDriveDistanceInches, AutoConstants.kAutoDriveSpeed, m_robotDrive);
+    private final Command m_simpleAuto = 
+    new DriveDistance(AutoConstants.kAutoDriveDistanceInches, AutoConstants.kAutoDriveSpeed, m_robotDrive);
+
+    private final Command m_pathweaver =
+    new Pathweaver();
+
+
+
 
     SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -80,8 +86,7 @@ public class RobotContainer {
                         m_robotDrive));
 
         m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
-        //m_chooser.addOption("Complex Auto", m_complexAuto);
-                    
+        m_chooser.addOption("Pathweaver", m_pathweaver);
                         // Put the chooser on the dashboard
         Shuffleboard.getTab("Autonomous").add(m_chooser);
     }
@@ -107,6 +112,7 @@ public class RobotContainer {
      *
      * @return the command to run in autonomousaa
      */
+    
     public Command getAutonomousCommand() {
         // Create a voltage constraint to ensure we don't accelerate too fast
         var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
@@ -161,4 +167,5 @@ public class RobotContainer {
         // Run path following command, then stop at the end.
         return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
     }
+    
 }
