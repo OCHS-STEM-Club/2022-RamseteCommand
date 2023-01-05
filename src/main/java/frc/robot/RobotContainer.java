@@ -27,10 +27,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.DriveAndTurn;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveDistance;
-import frc.robot.commands.Pathweaver;
+//import frc.robot.commands.Auto.TshirtShoot;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -51,6 +53,7 @@ import java.util.List;
 public class RobotContainer {
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+    private final Shooter m_shooter = new Shooter();
 
     // The driver's controller
     public static XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -60,8 +63,6 @@ public class RobotContainer {
     private final Command m_simpleAuto = 
     new DriveDistance(AutoConstants.kAutoDriveDistanceInches, AutoConstants.kAutoDriveSpeed, m_robotDrive);
 
-    private final Command m_pathweaver =
-    new Pathweaver();
 
 
 
@@ -77,6 +78,7 @@ public class RobotContainer {
 
         // Configure default commands
         // Set the default drive command to split-stick arcade drive
+        
         m_robotDrive.setDefaultCommand(
                 // A split-stick arcade command, with forward/backward controlled by the left
                 // hand, and turning controlled by the right.
@@ -86,9 +88,10 @@ public class RobotContainer {
                         m_robotDrive));
 
         m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
-        m_chooser.addOption("Pathweaver", m_pathweaver);
+        //m_chooser.addOption("Pathweaver", new TshirtShoot(m_robotDrive, m_shooter));
+        //m_chooser.addOption("DriveForward", new DriveAndTurn(m_robotDrive));
                         // Put the chooser on the dashboard
-        Shuffleboard.getTab("Autonomous").add(m_chooser);
+        //Shuffleboard.getTab("Autonomous").add(m_chooser);
     }
 
     /**

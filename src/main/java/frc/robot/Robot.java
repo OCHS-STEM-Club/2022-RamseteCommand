@@ -39,6 +39,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
+    System.out.println("help");
+
     /*
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONPath);
@@ -47,6 +49,7 @@ public class Robot extends TimedRobot {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryJSONPath, ex.getStackTrace());
    }
    */
+   
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -84,7 +87,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     
 
     /*

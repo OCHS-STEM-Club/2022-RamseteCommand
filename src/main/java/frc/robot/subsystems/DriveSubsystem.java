@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.AlgorithmParametersSpi;
 
 import com.revrobotics.CANSparkMax;
@@ -12,11 +15,17 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -62,6 +71,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
+
+  private static final String trajectoryJSONPath = "paths/TestPath1.wpilib.json"; //From Downloads File named output
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -211,7 +222,24 @@ public class DriveSubsystem extends SubsystemBase {
     return -m_navx.getRate();
   }
 
-  public void DriveDistance(DriveSubsystem driveSubsystem, double speed ){
+  public void DriveDistance(DriveSubsystem driveSubsystem, double speed ){}
 
+  
+
+  public Trajectory generateTrajectory(String trajectoryName, TrajectoryConfig config) {
+    try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONPath);
+      RobotContainer.autonomousTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+      return new Trajectory(); //this isn't right
+   } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSONPath, ex.getStackTrace());
+      return new Trajectory();
+   }
   }
+
+  public Trajectory generateTrajectoryFromFile(String filename) {
+      var config = new TrajectoryConfig(1, 3);
+      return generateTrajectory(filename, config);
+  }
+  
 }

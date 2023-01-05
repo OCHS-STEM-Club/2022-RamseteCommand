@@ -15,6 +15,9 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+   public static final int kAnalogInPort = 3;
+
   public static final class DriveConstants {
     public static final int kLeftMotor1Port = 5;
     public static final int kLeftMotor2Port = 6;
@@ -69,5 +72,7 @@ public final class Constants {
 
     public static final double kAutoDriveDistanceInches = 24;
     public static final double kAutoDriveSpeed = 0.5;
+
+   
   }
 }

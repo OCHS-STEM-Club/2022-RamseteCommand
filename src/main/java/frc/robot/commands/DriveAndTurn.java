@@ -13,12 +13,16 @@ import frc.robot.subsystems.DriveSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DriveAndTurn extends SequentialCommandGroup {
   /** Creates a new DriveAndTurn. */
-  public DriveAndTurn(DriveSubsystem drive) {
+  public DriveAndTurn(DriveSubsystem m_robotDrive) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+    addCommands(
+      
+    new DriveDistance(3, AutoConstants.kAutoDriveSpeed, m_robotDrive),
 
-    new DriveDistance(AutoConstants.kAutoDriveDistanceInches, AutoConstants.kAutoDriveSpeed, drive);
+    new DriveDistance(5, AutoConstants.kAutoDriveSpeed, m_robotDrive));
+
+    
   }
 }
 
